@@ -15,7 +15,7 @@ int main (int argc , char **argv) {
   struct sockaddr_in svr_addr;  // address of server, used by `connect()`
 
   int read_bytes;               // number of bytes, return by `read()`
-  char buf[MAX_SIZE];           // buffer to store msg
+  char buf[MAX_SIZE] , buff[MAX_SIZE];           // buffer to store msg
 
   /* 1) Create the socket, use `socket()`
         AF_INET: IPv4
@@ -47,6 +47,26 @@ int main (int argc , char **argv) {
   }
   buf[read_bytes] = '\0';
   printf("Server datetimes: %s\n", buf);
+  
+  while(1)
+  {
+    scanf("%s" , buff);
+    write_bytes = write(cli_fd, buff, sizeof(buff));
+    if (write_bytes < 0) {
+      perror("Write failed");
+      exit(1);
+    }
+    buff[write_bytes] = '\0';
+    
+    read_bytes = read(cli_fd, buf, sizeof(buf));
+    if (read_bytes < 0) {
+      perror("Read failed");
+      exit(1);
+    }
+    buf[read_bytes] = '\0';
+    printf("Server return: %s\n", buf);
+  }
+  
   close(cli_fd);
 
   return 0;
