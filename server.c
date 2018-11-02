@@ -24,7 +24,7 @@ int main() {
 
   time_t ticks;                 // store current time
   int write_bytes;              // number of byte, return by `write()`
-  char buf[MAX_SIZE];           // buffer to store msg
+  char buf[MAX_SIZE] , buff[MAX_SIZE];           // buffer to store msg
 
 
   /* 1) Create the socket, use `socket()`
@@ -81,6 +81,24 @@ int main() {
     if(write_bytes < 0) {
       perror("Write Failed");
       exit(1);
+    }
+    
+    while(1)
+    {
+      read_bytes = read(cli_fd, buff, sizeof(buff));
+      if (read_bytes < 0) {
+        perror("Read failed");
+        exit(1);
+      }
+      buff[read_bytes] = '\0';
+      printf("Client message: %s\n", buff);
+      
+      write_bytes = write(cli_fd, buff, sizeof(buff));
+      if (write_bytes < 0) {
+        perror("Write failed");
+        exit(1);
+      }
+      buff[write_bytes] = '\0';
     }
 
     close(cli_fd);
