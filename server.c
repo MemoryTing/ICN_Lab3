@@ -24,6 +24,7 @@ int main() {
 
   time_t ticks;                 // store current time
   int write_bytes;              // number of byte, return by `write()`
+  int read_bytes;              // number of byte, return by `read()`
   char buf[MAX_SIZE] , buff[MAX_SIZE];           // buffer to store msg
 
 
