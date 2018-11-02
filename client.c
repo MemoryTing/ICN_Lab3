@@ -15,6 +15,7 @@ int main (int argc , char **argv) {
   struct sockaddr_in svr_addr;  // address of server, used by `connect()`
 
   int read_bytes;               // number of bytes, return by `read()`
+  int write_bytes;               // number of bytes, return by `write()`
   char buf[MAX_SIZE] , buff[MAX_SIZE];           // buffer to store msg
 
   /* 1) Create the socket, use `socket()`
